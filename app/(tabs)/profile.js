@@ -341,13 +341,17 @@ const profile = () => {
         {/* Use avatar from user object or fallback to default image */}
         {user?.avatarUrl ? (
           <Image
-            source={{ uri: user.avatarUrl }}
-            style={styles.personPic}
-            onError={() => {
-              console.log("Avatar failed to load, using fallback");
-              // You could set a fallback avatar here or handle the error
-            }}
-          />
+    source={{ 
+      uri: user.avatarUrl,
+      headers: {
+        'Accept': 'image/*'
+      }
+    }}
+    style={styles.personPic}
+    onError={(e) => {
+      console.log("Avatar failed to load:", e.nativeEvent.error);
+    }}
+  />
         ) : (
           <Image
             source={require("../../assets/images/profile.jpg")}
